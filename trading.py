@@ -1,4 +1,6 @@
 import yfinance as yf
+import requests
+from bs4 import BeautifulSoup
 
 def get_data(ticker_symbol,thing):
     try:
@@ -32,4 +34,15 @@ def get_dividend_yield(ticker_symbol):
         return dividend_yield_ratio
     except Exception as e:
         print(f"Error fetching data: {e}")
+        return None
+
+def get_pe_ratio(ticker_symbol):
+    try:
+        url = f"https://finance.yahoo.com/quote/{ticker_symbol}"
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        pe_ratio = soup.find('td', {'data-test': 'PE_RATIO-value'}).text
+        return pe_ratio
+    except Exception as e:
+        print("Error occurred:", e)
         return None
