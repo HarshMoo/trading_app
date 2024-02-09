@@ -1,6 +1,5 @@
 import yfinance as yf
 import requests
-from bs4 import BeautifulSoup
 
 def get_data(ticker_symbol,thing):
     try:
@@ -36,13 +35,19 @@ def get_dividend_yield(ticker_symbol):
         print(f"Error fetching data: {e}")
         return None
 
-def get_pe_ratio(ticker_symbol):
+def get_pe_ratio(ticker_symbol, api_key):
     try:
-        url = f"https://finance.yahoo.com/quote/{ticker_symbol}"
-        response = requests.get(url)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        pe_ratio = soup.find('td', {'data-test': 'PE_RATIO-value'}).text
-        return pe_ratio
+        # Make a request to Alpha Vantage API
+        response = requests.get(f"https://www.alphavantage.co/query?function=OVERVIEW&symbol={ticker_symbol}&apikey={api_key}")
+        data = response.json()
+        
+        # Extract the P/E ratio from the response
+        pe_ratio = data.get('PERatio')
+        if pe_ratio:
+            return pe_ratio
+        else:
+            print("P/E ratio not available for the provided ticker symbol.")
+            return None
     except Exception as e:
         print("Error occurred:", e)
         return None
