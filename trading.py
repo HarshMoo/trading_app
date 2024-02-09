@@ -37,11 +37,10 @@ def get_dividend_yield(ticker_symbol):
 
 def get_pe_ratio(ticker_symbol, api_key):
     try:
-        # Make a request to Alpha Vantage API
+        
         response = requests.get(f"https://www.alphavantage.co/query?function=OVERVIEW&symbol={ticker_symbol}&apikey={api_key}")
         data = response.json()
         
-        # Extract the P/E ratio from the response
         pe_ratio = data.get('PERatio')
         if pe_ratio:
             return pe_ratio
