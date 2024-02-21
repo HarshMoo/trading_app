@@ -14,7 +14,11 @@ def get_data(ticker_symbol,thing):
     
 def get_price(ticker_symbol):
 
-    return get_data(ticker_symbol,"Close")
+    string = str(get_data(ticker_symbol,"Close"))
+
+    for i in range(0,len(string)):
+        if(string[i] == "."):
+            return float(string[:i+3])
 
 def get_volume(ticker_symbol):
 
@@ -50,3 +54,7 @@ def get_pe_ratio(ticker_symbol, api_key):
     except Exception as e:
         print("Error occurred:", e)
         return None
+
+ticker = "tsla"
+print(get_price(ticker))
+print(get_pe_ratio(ticker,"I2UY9RVYOFNTKO08"))
