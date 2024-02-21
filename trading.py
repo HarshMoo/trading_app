@@ -54,7 +54,3 @@ def get_pe_ratio(ticker_symbol, api_key):
     except Exception as e:
         print("Error occurred:", e)
         return None
-
-ticker = "tsla"
-print(get_price(ticker))
-print(get_pe_ratio(ticker,"I2UY9RVYOFNTKO08"))
