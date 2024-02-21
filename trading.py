@@ -54,3 +54,10 @@ def get_pe_ratio(ticker_symbol, api_key):
     except Exception as e:
         print("Error occurred:", e)
         return None
+    
+def main():
+
+    ticker = input("enter the ticker you want = ")
+    print(get_price(ticker))
+
+main()
